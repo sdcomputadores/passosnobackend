@@ -8,7 +8,7 @@ const checkToken = (req, res, next) => {
         return res.status(401).json({error: "Acesso negado"})
 
     }   try {
-        const verified = jwt.verifi(token, "nossosecret")
+        const verified = jwt.verify(token, "nossosecret")
         req.user = verify
         next() //continua
     } catch (err){

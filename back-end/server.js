@@ -11,6 +11,7 @@ const cors = require('cors')
 //routes
 const authRouter = require('./routes/authRouter.js')
 const userRouter = require('./routes/userRouter.js')
+const partyRouter = require('./routes/partyRouter.js')
 
 //middlewre
 
@@ -30,7 +31,8 @@ app.use(express.static('public'))
  // atrelar as Rotas
 
  app.get('/api/auth', authRouter)
- //app.get('/api/user', userRouter)
+ app.get('/api/user', userRouter)
+ app.get('/api/party', partyRouter)
  
  //conectar ao mongodb
   
