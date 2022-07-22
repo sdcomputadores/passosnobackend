@@ -30,9 +30,9 @@ app.use(express.static('public'))
 
  // atrelar as Rotas
 
- app.get('/api/auth', authRouter)
- app.get('/api/user', userRouter)
- app.get('/api/party', partyRouter)
+ app.get('/api/auth', authRouter) 
+ app.get('/api/user', userRouter) 
+ app.get('/api/party', partyRouter) 
  
  //conectar ao mongodb
   
@@ -40,12 +40,12 @@ mongoose.connect(`mongodb://127.0.0.1/${dbName}`, {
   useNewUrlParser: true, 
  // useFindAndModify: false,
   useUnifiedTopology: true}
-  )
+  ) 
+ 
 
  app.get("/", (req, res) =>{
-  res.json({message: "Rota test"})
+  res.json({msg: "Rota test"})
 })
-
 
 
 
