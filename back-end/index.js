@@ -17,7 +17,7 @@ const partyRouter = require('./routes/partyRouter.js')
 
 
 // config
-const dbName = 'partytimebp'
+const dbName = 'partytimet'
 const port = 3000
 const app =  express()
 

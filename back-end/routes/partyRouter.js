@@ -1,11 +1,11 @@
-const router = require('express')
+const router = require('express').Router()
 const jwt = rwquire('jsonwebtoken')
 const multer = require('multer')
 
 const Party = require('../models/party')
 const User = require('../models/user')
 // define file storage
-const diskStorage = require('../helps/file-etorage')
+const diskStorage = require('../helps/file-storage')
 const upload = multer({storage: diskStorage})
 
 //midlleware
@@ -24,12 +24,12 @@ router.post('/', verifyToken,upload.fields([{nome: 'photos'}]),async (req, res)=
 
     let files = []
 
-    if(req.file){
-        file = req.files.photos
+    if(req.files){
+        files = req.files.photos
     }
 
     if(title == "null" || description == 'null'|| partyDate == 'null' ){
-        return res.staus(400).json({ error: "Preencha ao menso descrição ou data! "})
+        return res.status(400).json({ error: "Preencha ao menso descrição ou data! "})
     }
 
     //verify token 
@@ -59,13 +59,13 @@ router.post('/', verifyToken,upload.fields([{nome: 'photos'}]),async (req, res)=
             const newParty = await party.save()
             res.json({error: null, msg: "Evento criado com suceso!", data: newParty})
         }catch(err){
-            return res.staus(400).json({ error})
+            return res.status(400).json({ error})
         }
 
 
     }catch (err){
 
-        return res.staus(400).json({ error: "Acesso negado "})
+        return res.status(400).json({ error: "Acesso negado "})
     }
 
 
@@ -73,5 +73,43 @@ router.post('/', verifyToken,upload.fields([{nome: 'photos'}]),async (req, res)=
 
 })
 
+router.get("/", async (req, res) => {
+    try{
+        const parties = await Party.find({privact: false}).sort ([[" id", -1]])
+        res.json({error: null, parties: parties})
+    }catch (err) {
+        return res.status(400).json({ error: "Acesso negado" })
+    }
+})
+
+
+ // get all public parties
+router.get('/all', async (req, res) => {
+     try{
+        const parties = await Party.find({privacy: false}).sort([['_id', -1]])
+     
+    }catch (err) {
+        return res.status(400).json({ error })
+     }
+})
+
+// get all user parties
+router.get("/userparties", verifyToken, async ( req, res) => {
+    try{
+        const token = req.header('auth-token')
+
+        const user = await getUserByToken(token)
+
+        const userId = user._id.toSting()
+
+        const parties = await Party.find({iserId: userId})
+
+    }catch (error){
+        return res.status(400).json({error}) 
+    }
+})
+
+
+ 
 module.exports = router
 

@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken')
 const checkToken = (req, res, next) => {
     const token = req.header("auth-token")
 
-    if(!token){
+    if(!token)
         return res.status(401).json({error: "Acesso negado"})
 
-    }   try {
+    
+     try {
         const verified = jwt.verify(token, "nossosecret")
-        req.user = verify
+        req.user = verified
         next() //continua
     } catch (err){
         res.status(400).json({error: "O token não é válido"})
@@ -18,4 +19,4 @@ const checkToken = (req, res, next) => {
      
 }
 
-module.export = checkToken
+module.exports = checkToken

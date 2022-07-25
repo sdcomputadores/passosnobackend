@@ -14,7 +14,7 @@ router.post('/register', async (req, res)=>{
 
     //check for require fiels 
     if(name == null || email == null || password ===null || confirmpassword == nul){
-        return res.status(400).json({error: "Por favor, preencha todos os dados!"})
+        return res.status(400).json({error: "Por favor, preencha todos os campos!"})
     }
     //chech if password math  
     if(password != confirmpassword){
@@ -27,7 +27,7 @@ router.post('/register', async (req, res)=>{
     }
     // create password
     const salt = await bcrypt.genSalt(12)
-    const passwordHash = await bcrypt.hash(password, salt)
+    const passwordHash = await bcrypt.hash(reqPassword, salt)
 
     console.log(passwordHash)
 

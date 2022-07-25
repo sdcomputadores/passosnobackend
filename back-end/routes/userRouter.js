@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
 //middleware
-const verifyToken = require('../helps/check-token/')
+const verifyToken = require('../helps/check-token')
 
 //helps
 const getUserByToken = require('../helps/get-user-by-token')
