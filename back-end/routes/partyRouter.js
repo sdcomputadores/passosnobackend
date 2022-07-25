@@ -103,6 +103,7 @@ router.get("/userparties", verifyToken, async ( req, res) => {
         const userId = user._id.toSting()
 
         const parties = await Party.find({iserId: userId})
+        res.json({error: null, parties: parties})
 
     }catch (error){
         return res.status(400).json({error}) 
