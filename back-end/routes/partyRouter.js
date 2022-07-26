@@ -105,9 +105,29 @@ router.get("/userparties", verifyToken, async ( req, res) => {
         const parties = await Party.find({iserId: userId})
         res.json({error: null, parties: parties})
 
+
+
     }catch (error){
         return res.status(400).json({error}) 
     }
+})
+// get user party
+router.get("/userparty/:id", verifytoken, async (req, res)=>{
+    try{
+        const token = req.header('autch-token')
+        const user = await getUserByToken(token)
+        const userId = user._id.toString()
+        const partyId = req.params.id
+
+        const party = await Party.findOne({_id: partyId ,userId: userId })
+
+
+    }catch (error){
+        return res.stataus(400).json({error})
+
+    }
+
+
 })
 
 
